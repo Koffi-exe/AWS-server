@@ -5,7 +5,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "echo \"node server.js"
+    "dev": "echo \"node server.js",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",

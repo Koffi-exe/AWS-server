@@ -8,13 +8,13 @@ const port = process.env.PORT || 3000
 
 app.use(bodyParser.json())
 
-app.post('/', (req, res) => {
+app.get('/', (req, res) => {
     res.send("Server running, send data at /register")
 })
 
-const UserSchema = mongoose.Schema({
-    username: String,
-    email: String,
+const UserSchema = new mongoose.Schema({
+    username: {type:String, unique:true, required:true},
+    email:{type:String, unique:true, required:true},
     password: String
 })
 
@@ -34,7 +34,7 @@ app.post('/register', async (req, res) => {
 app.listen(port, async () => {
     try {
         await mongoose.connect(process.env.MONGODB_URI)
-        console.log(`Listening at port:${port}, MongoDB database successfully connected`)
+        console.log(`Listening at port:${port},http://localhost:${port}  MongoDB database successfully connected`)
     } catch (error) {
         console.error(`Error: ${error.message}`)
     }
